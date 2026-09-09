@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Washington State Department of Social and Health Services - Find help with benefits, apply for services, and manage your needs person-first.">
+    <meta name="theme-color" content="#1b7d4a">
+    <title>DSHS - Washington State Department of Social and Health Services</title>
+
+    <style>
+        :root {
+            --color-primary: #1b7d4a;
+            --color-primary-light: #2a9d5d;
+            --color-primary-dark: #155a38;
+            --color-accent: #0d5f4f;
+            --color-accent-light: #1a8c6f;
+            --color-success: #2a9d5d;
+            --color-warning: #d4a017;
+            --color-error: #c41e3a;
+            --color-info: #0066cc;
+
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #4a4a4a;
+            --color-text-tertiary: #6a6a6a;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f5f5f5;
+            --color-bg-tertiary: #efefef;
+            --color-border: #d0d0d0;
+
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+
+            --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'Courier New', monospace;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+            --transition-fast: 150ms ease-in-out;
+            --transition-normal: 300ms ease-in-out;
+
+            --grid-columns: 12;
+            --grid-gap: 1.5rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --color-text-primary: #f0f0f0;
+                --color-text-secondary: #d0d0d0;
+                --color-text-tertiary: #a0a0a0;
+                --color-bg-primary: #1a1a1a;
+                --color-bg-secondary: #2a2a2a;
+                --color-bg-tertiary: #3a3a3a;
+                --color-border: #444444;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --color-text-primary: #f0f0f0;
+            --color-text-secondary: #d0d0d0;
+            --color-text-tertiary: #a0a0a0;
+            --color-bg-primary: #1a1a1a;
+            --color-bg-secondary: #2a2a2a;
+            --color-bg-tertiary: #3a3a3a;
+            --color-border: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-text-primary);
+            background-color: var(--color-bg-primary);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+        }
+
+        /* Accessibility - Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-primary);
+            color: white;
+            padding: var(--spacing-md);
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Header */
+        header {
+            background: var(--color-bg-primary);
+            border-bottom: 2px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-utility {
+            background: var(--color-primary);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+            font-size: 0.875rem;
+            align-items: center;
+        }
+
+        .header-utility a,
+        .header-utility button {
+            color: white;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 4px;
+            transition: background-color var(--transition-fast);
+        }
+
+        .header-utility a:hover,
+        .header-utility button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .header-utility a:focus,
+        .header-utility button:focus {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .header-main {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--spacing-md);
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            text-decoration: none;
+            color: var(--color-primary);
+            font-weight: bold;
+            font-size: 1.25rem;
+            transition: opacity var(--transition-fast);
+        }
+
+        .logo-section:hover,
+        .logo-section:focus {
+            opacity: 0.8;
+            outline: none;
+        }
+
+        .logo-section:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-size: 0.9rem;
+            line-height: 1.2;
+        }
+
+        nav {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 4px;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--color-primary);
+            background-color: var(--color-bg-secondary);
+        }
+
+        nav a:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 4px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-primary);
+            transition: width var(--transition-fast);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .theme-toggle,
+        .search-toggle,
+        .menu-toggle {
+            background: none;
+            border: 2px solid var(--color-border);
+            color: var(--color-text-primary);
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: all var(--transition-fast);
+        }
+
+        .theme-toggle:hover,
+        .search-toggle:hover,
+        .menu-toggle:hover {
+            background-color: var(--color-bg-secondary);
+            border-color: var(--color-primary);
+        }
+
+        .theme-toggle:focus,
+        .search-toggle:focus,
+        .menu-toggle:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Hero Section with Video */
+        .hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-primary);
+            color: white;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(27, 125, 74, 0.85) 0%, rgba(13, 95, 79, 0.85) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: var(--spacing-xl);
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.95;
+        }
+
+        /* AI Intent Search Section */
+        .ai-search-section {
+            background: var(--color-bg-secondary);
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .search-heading {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-xl);
+            color: var(--color-text-primary);
+        }
+
+        .search-form {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            transition: all var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-primary-light);
+            box-shadow: 0 0 0 3px rgba(27, 125, 74, 0.1);
+        }
+
+        .search-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 1rem;
+        }
+
+        .search-btn:hover {
+            background: var(--color-primary-light);
+        }
+
+        .search-btn:focus {
+            outline: 2px solid var(--color-primary-dark);
+            outline-offset: 2px;
+        }
+
+        .search-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .suggestion-chip {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-align: center;
+            color: var(--color-text-primary);
+            font-weight: 500;
+        }
+
+        .suggestion-chip:hover {
+            border-color: var(--color-primary);
+            background: var(--color-bg-secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .suggestion-chip:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Person-Centric Journey Section */
+        .journey-section {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background: var(--color-bg-primary);
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .journey-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-3xl);
+            color: var(--color-text-primary);
+        }
+
+        .journey-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .journey-step {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .journey-step:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .journey-step:focus {
+            outline: 2px solid var(--color-primary-dark);
+            outline-offset: 2px;
+        }
+
+        .journey-arrow {
+            display: none;
+            font-size: 2rem;
+            color: var(--color-primary);
+            font-weight: bold;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .journey-arrow {
+                display: flex;
+            }
+
+            .journey-flow {
+                grid-template-columns: repeat(7, 1fr);
+            }
+        }
+
+        /* Quick Actions Grid */
+        .quick-actions {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background: var(--color-bg-secondary);
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .quick-actions-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-2xl);
+            color: var(--color-text-primary);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .action-card {
+            background: var(--color-bg-primary);
+            border: 2px solid var(--color-border);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            text-align: center;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .action-card:hover {
+            border-color: var(--color-primary);
+            background: var(--color-bg-secondary);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-card:focus-within {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .action-icon {
+            font-size: 3rem;
+            display: block;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-card h3 {
+            font-size: 1.125rem;
+            color: var(--color-text-primary);
+            margin: 0;
+        }
+
+        .action-card p {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Life Situations Section */
+        .life-situations {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background: var(--color-bg-primary);
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .situations-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-2xl);
+            color: var(--color-text-primary);
+        }
+
+        .situations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .situation-card {
+            background: linear-gradient(135deg, rgba(27, 125, 74, 0.1) 0%, rgba(13, 95, 79, 0.05) 100%);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .situation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+
+        .situation-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .situation-content {
+            padding: var(--spacing-lg);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .situation-card h3 {
+            font-size: 1.25rem;
+            color: var(--color-text-primary);
+            margin: 0;
+        }
+
+        .situation-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+            flex: 1;
+        }
+
+        .situation-link {
+            color: var(--color-primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .situation-link:hover {
+            color: var(--color-primary-light);
+            gap: var(--spacing-md);
+        }
+
+        .situation-link:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Card Stacking Effect for Mobile */
+        @media (max-width: 768px) {
+            .situation-card {
+                transform: perspective(1000px) rotateX(0deg) rotateZ(0deg);
+            }
+
+            .situation-card:nth-child(n+2) {
+                margin-top: -20px;
+            }
+
+            .situation-card:hover {
+                z-index: 10;
+                transform: translateY(-12px) perspective(1000px) rotateX(2deg) rotateZ(-1deg);
+            }
+
+            .actions-grid > :nth-child(n+2) {
+                margin-top: -16px;
+            }
+        }
+
+        /* Resources Section */
+        .resources {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background: var(--color-bg-secondary);
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .resources-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-2xl);
+            color: var(--color-text-primary);
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .resource-item {
+            background: var(--color-bg-primary);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+            transition: all var(--transition-fast);
+        }
+
+        .resource-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .resource-item h3 {
+            font-size: 1rem;
+            color: var(--color-text-primary);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .resource-item p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text-primary);
+            color: white;
+            padding: var(--spacing-3xl) var(--spacing-xl) var(--spacing-xl);
+            margin-top: var(--spacing-3xl);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .footer-section h3 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            padding: var(--spacing-xs) 0;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-section a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-section a:focus {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            font-size: 0.875rem;
+        }
+
+        .compunnel-credit {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        /* Large DSHS Background Text */
+        .dshs-bg-text {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            right: 0;
+            font-size: clamp(300px, 80vw, 800px);
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--color-text-primary);
+            opacity: 0.08;
+            line-height: 1;
+            pointer-events: none;
+            letter-spacing: -0.02em;
+            text-align: center;
+            z-index: 0;
+        }
+
+        /* Accessibility Button - Sticky */
+        .accessibility-button {
+            position: fixed;
+            bottom: var(--spacing-xl);
+            right: var(--spacing-xl);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 100;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .accessibility-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(27, 125, 74, 0.3);
+        }
+
+        .accessibility-button:focus {
+            outline: 2px solid white;
+            outline-offset: 4px;
+        }
+
+        /* Responsive Design - Tablet */
+        @media (max-width: 1024px) {
+            :root {
+                --grid-gap: 1.25rem;
+            }
+
+            .header-main {
+                padding: var(--spacing-md);
+                gap: var(--spacing-md);
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .journey-flow {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .journey-arrow {
+                display: none;
+            }
+        }
+
+        /* Responsive Design - Mobile */
+        @media (max-width: 767px) {
+            :root {
+                --grid-gap: 1rem;
+                --spacing-xl: 1.5rem;
+                --spacing-2xl: 2rem;
+                --spacing-3xl: 2.5rem;
+            }
+
+            .header-main {
+                grid-template-columns: auto 1fr;
+                padding: var(--spacing-md);
+            }
+
+            .header-utility {
+                font-size: 0.75rem;
+                gap: var(--spacing-sm);
+            }
+
+            .header-controls {
+                grid-column: 2;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .hero {
+                height: 300px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-suggestions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .journey-flow {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
+            }
+
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .situations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .situation-card {
+                min-height: 250px;
+            }
+
+            .situation-image {
+                height: 150px;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accessibility-button {
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+                width: 45px;
+                height: 45px;
+                font-size: 1.25rem;
+            }
+
+            .dshs-bg-text {
+                font-size: clamp(150px, 60vw, 400px);
+                bottom: -50px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header-utility,
+            .header-controls,
+            .accessibility-button,
+            .dshs-bg-text {
+                display: none;
+            }
+
+            body {
+                line-height: 1.5;
+            }
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: more) {
+            .action-card,
+            .situation-card {
+                border-width: 3px;
+            }
+
+            nav a {
+                border-bottom: 2px solid transparent;
+            }
+
+            nav a:hover {
+                border-bottom: 2px solid var(--color-primary);
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- DSHS Background Text -->
+    <div class="dshs-bg-text" aria-hidden="true">DSHS</div>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header role="banner">
+        <div class="header-utility">
+            <div class="language-selector">
+                <button type="button" aria-label="Select language" title="Language selection">
+                    🌐 English
+                </button>
+            </div>
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                🌙
+            </button>
+            <a href="#" aria-label="Sign in">Sign In</a>
+            <a href="#" aria-label="Crisis or emergency help">🚨 Crisis Help</a>
+        </div>
+
+        <div class="header-main">
+            <a href="#" class="logo-section" aria-label="DSHS Home">
+                <div style="background: linear-gradient(135deg, #1b7d4a 0%, #0d5f4f 100%); width: 50px; height: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem;">DSHS</div>
+                <div class="logo-text">
+                    Washington State<br>Social & Health Services
+                </div>
+            </a>
+
+            <nav aria-label="Primary navigation">
+                <a href="#">Get Help</a>
+                <a href="#">Manage My Benefits</a>
+                <a href="#">Services & Programs</a>
+                <a href="#">Resources</a>
+                <a href="#">Find Provider/Office</a>
+                <a href="#">WA Cares</a>
+                <a href="#">About</a>
+            </nav>
+
+            <div class="header-controls">
+                <button type="button" class="search-toggle" aria-label="Open search">🔍</button>
+                <button type="button" class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section with Video -->
+        <section class="hero" role="region" aria-label="Hero section">
+            <video class="hero-video" autoplay muted loop aria-hidden="true" playsinline>
+                <source src="" type="video/mp4">
+            </video>
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="hero-content">
+                <h1>How Can We Help You Today?</h1>
+                <p>Person-centered support for Washington families and individuals</p>
+            </div>
+        </section>
+
+        <!-- AI Intent Search Section -->
+        <section class="ai-search-section" role="search" aria-label="Search for services">
+            <div class="search-container">
+                <h2 class="search-heading">Describe Your Need</h2>
+                <form class="search-form" onsubmit="return false;">
+                    <div class="search-input-wrapper">
+                        <input
+                            type="text"
+                            class="search-input"
+                            placeholder="Tell us what you need... (e.g., 'I need food help', 'Help caring for my parent')"
+                            aria-label="Service search input"
+                            autocomplete="off"
+                        >
+                    </div>
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+
+                <div class="search-suggestions">
+                    <div class="suggestion-chip" tabindex="0" role="button">I need food help</div>
+                    <div class="suggestion-chip" tabindex="0" role="button">Health coverage</div>
+                    <div class="suggestion-chip" tabindex="0" role="button">Cash assistance</div>
+                    <div class="suggestion-chip" tabindex="0" role="button">Housing help</div>
+                    <div class="suggestion-chip" tabindex="0" role="button">Caregiving support</div>
+                    <div class="suggestion-chip" tabindex="0" role="button">Disability services</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Person-Centric Journey Section -->
+        <section class="journey-section" role="region" aria-label="Your journey with us">
+            <h2 class="journey-title">Your Journey With Us</h2>
+            <div class="journey-flow">
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Need - First step">MY NEED</div>
+                <div class="journey-arrow" aria-hidden="true">→</div>
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Eligibility - Second step">MY ELIGIBILITY</div>
+                <div class="journey-arrow" aria-hidden="true">→</div>
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Application - Third step">MY APPLICATION</div>
+                <div class="journey-arrow" aria-hidden="true">→</div>
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Documents - Fourth step">MY DOCUMENTS</div>
+                <div class="journey-arrow" aria-hidden="true">→</div>
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Status - Fifth step">MY STATUS</div>
+                <div class="journey-arrow" aria-hidden="true">→</div>
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Next Step - Sixth step">MY NEXT STEP</div>
+                <div class="journey-arrow" aria-hidden="true">→</div>
+                <div class="journey-step" tabindex="0" role="button" aria-label="My Benefits - Final step">MY BENEFITS</div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions" role="region" aria-label="Quick actions">
+            <h2 class="quick-actions-title">Get Started Now</h2>
+            <div class="actions-grid">
+                <div class="action-card" tabindex="0" role="button">
+                    <span class="action-icon">📝</span>
+                    <h3>Apply for Benefits</h3>
+                    <p>Start a new application</p>
+                </div>
+                <div class="action-card" tabindex="0" role="button">
+                    <span class="action-icon">📊</span>
+                    <h3>Check My Status</h3>
+                    <p>Track application progress</p>
+                </div>
+                <div class="action-card" tabindex="0" role="button">
+                    <span class="action-icon">🔄</span>
+                    <h3>Renew/Report Changes</h3>
+                    <p>Update your information</p>
+                </div>
+                <div class="action-card" tabindex="0" role="button">
+                    <span class="action-icon">📁</span>
+                    <h3>Upload Documents</h3>
+                    <p>Submit required documents</p>
+                </div>
+                <div class="action-card" tabindex="0" role="button">
+                    <span class="action-icon">🏢</span>
+                    <h3>Find Local Office</h3>
+                    <p>Locate a service office</p>
+                </div>
+                <div class="action-card" tabindex="0" role="button">
+                    <span class="action-icon">🔍</span>
+                    <h3>Find a Provider</h3>
+                    <p>Search care providers</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Life Situations Section -->
+        <section class="life-situations" role="region" aria-label="Browse by life situation">
+            <h2 class="situations-title">What's Your Situation?</h2>
+            <div class="situations-grid">
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">🍎</div>
+                    <div class="situation-content">
+                        <h3>Food & Basic Needs</h3>
+                        <p>Get help with food, nutrition assistance, and essential resources for your family.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">❤️</div>
+                    <div class="situation-content">
+                        <h3>Health Coverage</h3>
+                        <p>Explore medical, dental, and health insurance options for you and your family.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">🏠</div>
+                    <div class="situation-content">
+                        <h3>Housing & Cash Help</h3>
+                        <p>Find assistance with housing, emergency cash, and financial support programs.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">👨‍🦽</div>
+                    <div class="situation-content">
+                        <h3>Disability Support</h3>
+                        <p>Discover resources, vocational rehabilitation, and support for disabilities.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">👴</div>
+                    <div class="situation-content">
+                        <h3>Aging & Long-Term Care</h3>
+                        <p>Find care planning, benefits, and support for seniors and caregivers.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">👨‍👩‍👧</div>
+                    <div class="situation-content">
+                        <h3>Family & Child Support</h3>
+                        <p>Access child support services, family assistance, and youth programs.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">💼</div>
+                    <div class="situation-content">
+                        <h3>Employment & Training</h3>
+                        <p>Get job training, employment support, and vocational rehabilitation services.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">🧠</div>
+                    <div class="situation-content">
+                        <h3>Behavioral Health</h3>
+                        <p>Find mental health services, crisis support, and behavioral health resources.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+
+                <div class="situation-card" tabindex="0" role="button">
+                    <div class="situation-image">🏥</div>
+                    <div class="situation-content">
+                        <h3>Long-Term Care</h3>
+                        <p>Learn about long-term care options, planning, and WA Cares benefits.</p>
+                        <a href="#" class="situation-link">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section class="resources" role="region" aria-label="Resources and tools">
+            <h2 class="resources-title">Helpful Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <h3>📚 Eligibility Guides</h3>
+                    <p>Understand who qualifies for each program</p>
+                </div>
+                <div class="resource-item">
+                    <h3>💰 Benefits Calculator</h3>
+                    <p>Estimate your benefit amounts</p>
+                </div>
+                <div class="resource-item">
+                    <h3>📋 Forms & Publications</h3>
+                    <p>Download required forms and guides</p>
+                </div>
+                <div class="resource-item">
+                    <h3>🎥 Video Tutorials</h3>
+                    <p>Watch how-to videos for common tasks</p>
+                </div>
+                <div class="resource-item">
+                    <h3>❓ FAQs</h3>
+                    <p>Find answers to common questions</p>
+                </div>
+                <div class="resource-item">
+                    <h3>⚖️ Rights & Appeals</h3>
+                    <p>Understand your rights and appeal options</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">About DSHS</a></li>
+                    <li><a href="#">Work at DSHS</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Find a Service Office</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="#">Privacy Notice</a></li>
+                    <li><a href="#">Accessibility Statement</a></li>
+                    <li><a href="#">Nondiscrimination Policy</a></li>
+                    <li><a href="#">Language Access</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Apply Online</a></li>
+                    <li><a href="#">Track Benefits</a></li>
+                    <li><a href="#">Report Abuse</a></li>
+                    <li><a href="#">Report Fraud</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2024 Washington State DSHS. All rights reserved.</div>
+            <div class="compunnel-credit">
+                Website Design by
+                <strong style="color: #2a9d5d;">COMPUNNEL DIGITAL</strong>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Accessibility Button -->
+    <button class="accessibility-button" aria-label="Open accessibility options" title="Accessibility Controls (A)">
+        ♿
+    </button>
+
+    <script>
+        // Theme Management with Auto-Detection
+        class ThemeManager {
+            constructor() {
+                this.lightTheme = 'light';
+                this.darkTheme = 'dark';
+                this.systemTheme = 'system';
+                this.storageKey = 'dshs-theme-preference';
+                this.init();
+            }
+
+            init() {
+                this.themeToggle = document.getElementById('themeToggle');
+                if (this.themeToggle) {
+                    this.themeToggle.addEventListener('click', () => this.cycleTheme());
+                }
+                this.applyTheme();
+                this.setupAutoDetection();
+            }
+
+            getCurrentTheme() {
+                return localStorage.getItem(this.storageKey) || this.systemTheme;
+            }
+
+            setTheme(theme) {
+                localStorage.setItem(this.storageKey, theme);
+                this.applyTheme();
+            }
+
+            applyTheme() {
+                const preference = this.getCurrentTheme();
+                let theme = preference;
+
+                if (preference === this.systemTheme) {
+                    theme = this.getSystemTheme();
+                }
+
+                if (theme === this.darkTheme) {
+                    document.documentElement.setAttribute('data-theme', this.darkTheme);
+                    if (this.themeToggle) this.themeToggle.textContent = '☀️';
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    if (this.themeToggle) this.themeToggle.textContent = '🌙';
+                }
+            }
+
+            getSystemTheme() {
+                const hour = new Date().getHours();
+                const isDaylight = hour >= 6 && hour < 19;
+                return isDaylight ? this.lightTheme : this.darkTheme;
+            }
+
+            cycleTheme() {
+                const current = this.getCurrentTheme();
+                let next = this.systemTheme;
+
+                if (current === this.systemTheme) {
+                    next = this.lightTheme;
+                } else if (current === this.lightTheme) {
+                    next = this.darkTheme;
+                }
+
+                this.setTheme(next);
+            }
+
+            setupAutoDetection() {
+                setInterval(() => {
+                    if (this.getCurrentTheme() === this.systemTheme) {
+                        this.applyTheme();
+                    }
+                }, 60000); // Check every minute
+            }
+        }
+
+        // Initialize Theme Manager
+        const themeManager = new ThemeManager();
+
+        // Keyboard Navigation for Interactive Elements
+        document.querySelectorAll('[role="button"]').forEach(button => {
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Accessibility Hotkey (A key)
+        document.addEventListener('keydown', (e) => {
+            if (e.altKey && e.key === 'a') {
+                document.querySelector('.accessibility-button').focus();
+            }
+        });
+
+        // Focus management for search form
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.setAttribute('aria-expanded', 'true');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        // Mobile menu toggle (placeholder functionality)
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+        });
+
+        // Announce theme changes to screen readers
+        const announcer = document.createElement('div');
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.className = 'sr-only';
+        document.body.appendChild(announcer);
+
+        const originalSetTheme = themeManager.setTheme.bind(themeManager);
+        themeManager.setTheme = function(theme) {
+            originalSetTheme(theme);
+            const themeNames = { light: 'Light mode', dark: 'Dark mode', system: 'System theme' };
+            announcer.textContent = `Theme changed to ${themeNames[theme]}`;
+        };
+    </script>
+</body>
+</html>

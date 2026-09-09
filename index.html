@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Washington State Department of Social and Health Services — tell us what you need and we'll guide you from need to benefits.">
+<meta name="color-scheme" content="light dark">
+<title>DSHS — Washington State Department of Social and Health Services</title>
+<style>
+/* =========================================================
+   DESIGN TOKENS — colors sampled from the DSHS logo
+   green #76A43B · blue #4BA3C3 · purple #7B5CA5 · ink #231F20
+   Text-on-white variants darkened to pass WCAG 2.2 AA (≥4.5:1)
+   ========================================================= */
+:root{
+  --footer:#231F20;
+  --green:#76A43B; --green-700:#4F7A1F; --green-800:#3E6118; --green-100:#EAF2DD;
+  --blue:#4BA3C3;  --blue-700:#1F6E8C;  --blue-800:#175A73;  --blue-100:#E1F1F7;
+  --purple:#7B5CA5;--purple-700:#5B3F85;--purple-800:#48326B;--purple-100:#EDE7F5;
+  --ink:#231F20;
+
+  --bg:#FFFFFF; --bg-2:#F6F7F4; --bg-3:#ECEEE8; --surface:#FFFFFF;
+  --text:#1E1B1C; --text-2:#4A4548; --text-3:#615B5E; --line:#D6D9D0;
+  --brand:var(--green-700); --brand-strong:var(--green-800); --brand-soft:var(--green-100);
+  --accent:var(--blue-700); --accent-soft:var(--blue-100);
+  --tertiary:var(--purple-700); --tertiary-soft:var(--purple-100);
+  --focus:#1F6E8C; --on-brand:#FFFFFF;
+  --shadow:0 2px 6px rgba(35,31,32,.08),0 12px 28px rgba(35,31,32,.08);
+  --radius:14px; --gutter:24px; --maxw:1280px;
+  --ease:200ms cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#231F20; --bg-2:#2B2728; --bg-3:#332F30; --surface:#2B2728; --footer:#000000;
+    --text:#F3F1EE; --text-2:#CFCBC6; --text-3:#ABA5A0; --line:#3A3E40;
+    --brand:#9CC65C; --brand-strong:#B4D97A; --brand-soft:#26321A;
+    --accent:#7BC3DD; --accent-soft:#16303A;
+    --tertiary:#B39BD6; --tertiary-soft:#2C2340;
+    --focus:#9CD8EE; --on-brand:#121314;
+    --shadow:0 2px 6px rgba(0,0,0,.4),0 12px 28px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#231F20; --bg-2:#2B2728; --bg-3:#332F30; --surface:#2B2728; --footer:#000000;
+  --text:#F3F1EE; --text-2:#CFCBC6; --text-3:#ABA5A0; --line:#3A3E40;
+  --brand:#9CC65C; --brand-strong:#B4D97A; --brand-soft:#26321A;
+  --accent:#7BC3DD; --accent-soft:#16303A;
+  --tertiary:#B39BD6; --tertiary-soft:#2C2340;
+  --focus:#9CD8EE; --on-brand:#121314;
+  --shadow:0 2px 6px rgba(0,0,0,.4),0 12px 28px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:16px;transition:background-color var(--ease),color var(--ease);overflow-x:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+ul{list-style:none}
+h1,h2,h3{line-height:1.2;text-wrap:balance}
+
+/* Focus — WCAG 2.2 2.4.11/2.4.13 visible, not obscured */
+:where(a,button,input,[tabindex]):focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--brand);color:var(--on-brand);padding:12px 18px;font-weight:700;border-radius:8px;z-index:1000;transition:top var(--ease)}
+.skip:focus{top:8px}
+
+/* 12-COLUMN GRID */
+.container{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter);row-gap:var(--gutter)}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}
+
+/* Consistent section rhythm (Gestalt: similarity + proximity) */
+.section{padding-block:64px}
+.section-head{text-align:center;margin-bottom:36px}
+.section-head h2{font-size:clamp(1.75rem,1.2rem + 1.6vw,2.4rem);font-weight:800}
+.section-head h2 em{font-style:normal;color:var(--brand)}
+.section-head p{color:var(--text-2);margin-top:8px}
+.head-row{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.head-row .section-head{text-align:left;margin:0}
+.link-more{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:600;color:var(--text-2);text-decoration:none;padding:0 6px}
+.link-more:hover{color:var(--brand);text-decoration:underline}
+
+/* Utility bar */
+.utility{background:#fff;color:#231F20;font-size:.85rem;border-bottom:1px solid #E3E3E0}
+.utility .container{display:flex;justify-content:space-between;align-items:center;min-height:36px;gap:12px}
+.utility ul{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.utility a,.utility button{color:#231F20;text-decoration:none;min-height:36px;display:inline-flex;align-items:center;padding:0 10px;background:none;border:0;border-radius:6px}
+.utility a:hover,.utility button:hover{background:#F0F1EC;text-decoration:underline}
+.utility .flag{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green-700);margin-right:6px}
+.utility :focus-visible{outline-color:var(--blue-700)}
+
+/* Header */
+.header{position:sticky;top:0;z-index:100;background:var(--footer);color:#fff;border-bottom:1px solid rgba(255,255,255,.12)}
+.header .container{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;min-height:68px}
+.logo{display:flex;align-items:center;text-decoration:none;min-height:44px}
+.logo .mark{height:42px;width:auto}
+.logo .word{margin-left:10px;display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}
+.logo .word b{font-size:1.25rem;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-bottom:2px}
+.logo .word span{display:block;font-size:.58rem;line-height:1.15;letter-spacing:.03em;text-transform:uppercase;color:#D9D4CE;font-weight:600;white-space:nowrap}
+.nav{display:flex;justify-content:center;gap:4px}
+.nav a{text-decoration:none;font-weight:600;padding:0 12px;min-height:44px;display:inline-flex;align-items:center;border-radius:8px;position:relative;color:#fff;white-space:nowrap}
+.nav a:hover{background:rgba(255,255,255,.12)}
+.nav a[aria-current="page"]::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:3px;background:var(--green);border-radius:2px}
+.header :focus-visible{outline-color:#fff}
+.tools{display:flex;align-items:center;gap:8px}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;display:inline-flex;align-items:center;justify-content:center}
+.icon-btn:hover{border-color:#fff}
+.drawer .icon-btn{color:var(--text);border-color:var(--line)}
+.icon-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+
+/* Theme switch — single icon, role=switch */
+.theme-switch{position:relative}
+.theme-switch svg{position:absolute;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:opacity var(--ease),transform var(--ease)}
+.theme-switch .ic-moon{opacity:1;transform:rotate(0)}
+.theme-switch .ic-sun{opacity:0;transform:rotate(-90deg)}
+:root[data-theme="dark"] .theme-switch .ic-moon{opacity:0;transform:rotate(90deg)}
+:root[data-theme="dark"] .theme-switch .ic-sun{opacity:1;transform:rotate(0)}
+
+/* Mobile drawer */
+.drawer{position:fixed;inset:0;z-index:200;display:none}
+.drawer[data-open="true"]{display:block}
+.drawer .scrim{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.drawer .panel{position:absolute;top:0;right:0;bottom:0;width:min(88vw,360px);background:var(--bg);padding:20px;overflow:auto;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.drawer .panel a{display:flex;align-items:center;min-height:48px;padding:0 12px;border-radius:10px;text-decoration:none;font-weight:600;font-size:1.05rem}
+.drawer .panel a:hover{background:var(--bg-2)}
+.drawer .close{align-self:flex-end}
+
+/* HERO — mirrors reference: headline left, quick-service cards overlapping the media */
+.hero{padding-top:0;padding-bottom:48px;position:relative}
+.hero-top{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter);align-items:end}
+.hero-copy{grid-column:1/9;padding-inline:var(--gutter);padding-bottom:0}
+.eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2);font-weight:700;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:28px;height:3px;background:var(--brand);border-radius:2px}
+.hero h1{font-size:clamp(1.8rem,1.2rem + 2.3vw,2.75rem);font-weight:800;letter-spacing:-.015em;margin-top:12px}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p.lead{color:var(--text-2);font-size:1.05rem;max-width:56ch;margin-top:10px}
+.hero-media{position:relative;margin-top:0;border-radius:24px;overflow:hidden;aspect-ratio:21/9.9;background:var(--ink);min-height:462px;width:100%}
+.reel,.reel video{position:absolute;inset:0;width:100%;height:100%}
+.reel video{object-fit:cover;object-position:center 30%;opacity:0;transition:opacity 900ms ease}
+.reel video.is-active{opacity:1}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(35,31,32,.05) 0%,rgba(35,31,32,0) 40%,rgba(35,31,32,.72) 100%);pointer-events:none}
+.vid-btn{position:absolute;left:16px;top:16px;z-index:3;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:#231F20;display:grid;place-items:center;padding:0}
+.vid-btn:hover{background:#fff;transform:scale(1.06)}
+.vid-btn svg{width:16px;height:16px;fill:currentColor;grid-area:1/1}
+.vid-btn .i-play{display:none}
+.vid-btn[aria-pressed="false"] .i-pause{display:none}
+.vid-btn[aria-pressed="false"] .i-play{display:block}
+.hero-search{position:absolute;left:0;right:0;bottom:40px;z-index:3;padding-inline:var(--gutter)}
+.hero-search-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.reel-nav{display:flex;align-items:center;gap:6px}
+.reel-nav > button{width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:#fff;display:grid;place-items:center;padding:0}
+.reel-nav > button:hover{background:rgba(255,255,255,.2)}
+.reel-nav > button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dots{display:flex;gap:8px;align-items:center}
+.dots button{width:24px;height:24px;border:0;background:transparent;padding:0;display:grid;place-items:center;border-radius:50%}
+.dots button::before{content:"";width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);transition:all var(--ease)}
+.dots button[aria-current="true"]::before{background:#fff;width:22px;border-radius:4px}
+.hero-cards{position:absolute;right:var(--gutter);top:-30px;z-index:4;display:flex;align-items:flex-start;gap:0}
+.card-dark{background:var(--purple-800);color:#fff;padding:22px;width:260px;border-radius:12px 0 0 12px;box-shadow:var(--shadow)}
+.card-dark h2{font-size:1.25rem;font-weight:800}
+.card-dark label{display:block;font-size:.85rem;margin-top:14px;font-weight:600}
+.card-dark input{width:100%;height:44px;border:0;border-radius:8px;padding:0 12px;margin-top:6px;font:inherit;background:#fff;color:#231F20}
+.card-dark input::placeholder{color:#5c5659}
+/* ---- Buttons: green primary; Airbnb-style hover (soft grey fill / lift), Material ripple + press ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font-weight:700;text-decoration:none;border:0;background:var(--green);color:#132008}
+button,.btn,.icon-btn,.chips button,.quick2 a,.wc-tiles a,.dots button,.reel-nav > button,.vid-btn,.crisis-close,.a11y,.deck-ctrl button,.rail button,.tabs [role="tab"]{position:relative;overflow:hidden;transition:background-color 180ms ease,color 180ms ease,box-shadow 180ms ease,transform 120ms ease,border-color 180ms ease;-webkit-tap-highlight-color:transparent}
+.btn:hover,.ai-search button:hover{background:#8BC653;box-shadow:0 6px 16px rgba(35,31,32,.18);transform:translateY(-1px)}
+.btn:active,.ai-search button:active,.icon-btn:active,.chips button:active,.tabs [role="tab"]:active,.deck-ctrl button:active,.rail button:active,.a11y:active{transform:scale(.96)}
+/* secondary (non-primary) controls: Airbnb "Where / When / Who" hover = soft grey fill */
+.chips button:hover,.tabs [role="tab"]:hover:not([aria-selected="true"]),.deck-ctrl button:hover,.rail button:hover,.footer-links select:hover{background:#EBEBEB;color:#231F20;border-color:#EBEBEB}
+:root[data-theme="dark"] .chips button:hover,:root[data-theme="dark"] .tabs [role="tab"]:hover:not([aria-selected="true"]),:root[data-theme="dark"] .deck-ctrl button:hover,:root[data-theme="dark"] .rail button:hover{background:#3A3637;color:#F3F1EE;border-color:#3A3637}
+.icon-btn:hover,.reel-nav > button:hover,.dots button:hover,.crisis-close:hover{background:rgba(255,255,255,.18)}
+.quick2 a:hover,.wc-tiles a:hover{box-shadow:0 6px 16px rgba(0,0,0,.15);transform:translateY(-1px)}
+/* Material ripple */
+.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple 520ms ease-out forwards;background:currentColor;opacity:.18;pointer-events:none}
+@keyframes ripple{to{transform:scale(3);opacity:0}}
+@media (prefers-reduced-motion:reduce){.ripple{display:none}}
+.btn-inverse{width:100%;margin-top:10px}
+.card-dark .hours{font-size:.84rem;margin-top:16px;line-height:1.5;color:#E6DDF3}
+.card-light{background:var(--green);color:#1A2B0A;padding:22px;width:300px;border-radius:0 12px 12px 12px;margin-top:26px;box-shadow:var(--shadow)}
+.card-light h2{font-size:1.15rem;font-weight:800;text-align:center;color:#132008}
+.quick2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.quick2 a{background:rgba(255,255,255,.28);border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none;font-weight:700;font-size:.9rem;min-height:44px;display:flex;flex-direction:column;align-items:center;gap:6px;color:#132008}
+
+.quick2 svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.phone{margin-top:14px;background:#132008;color:#fff;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px;text-decoration:none}
+.phone b{font-size:1.25rem;display:block;letter-spacing:.01em}
+.phone span{font-size:.8rem;color:#DCE9C8}
+.phone svg{width:34px;height:34px;flex:none;fill:none;stroke:#9CC65C;stroke-width:2}
+
+/* AI SEARCH — pill above the video */
+.ai-search{display:flex;align-items:center;margin-top:0;height:64px;border-radius:999px;background:var(--surface);border:2px solid var(--brand);box-shadow:var(--shadow);padding:0 8px 0 10px;position:relative;z-index:2}
+.ai-mark{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--green) 0%,var(--blue) 55%,var(--purple) 100%)}
+.ai-mark svg{width:24px;height:24px;fill:currentColor}
+.ai-search input{flex:1;min-width:0;height:100%;border:0;background:transparent;padding:0 14px;font:inherit;font-size:1.05rem;color:var(--text)}
+.ai-search input::placeholder{color:var(--text-3)}
+.ai-search input:focus,.ai-search input:focus-visible{outline:none;box-shadow:none}
+.ai-search:focus-within{border-color:var(--brand-strong);box-shadow:0 0 0 4px rgba(118,164,59,.28),var(--shadow)}
+.card-dark input:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(255,255,255,.7)}
+.ai-search button{width:46px;height:46px;border-radius:50%;border:0;background:var(--green);color:#132008;display:grid;place-items:center;flex:none}
+.ai-search button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:1px solid rgba(255,255,255,.55);background:rgba(35,31,32,.45);backdrop-filter:blur(6px);border-radius:999px;height:32px;padding:0 12px;font-size:.82rem;color:#fff;display:inline-flex;align-items:center}
+
+.hero-stage{position:relative;margin-top:56px}
+
+/* Icon quick links row */
+.quicklinks{background:var(--bg-2);border-block:1px solid var(--line);padding-block:14px}
+.quicklinks ul{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:12px}
+.quicklinks a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--text);text-align:center;font-size:.85rem;line-height:1.25;font-weight:600;padding:4px 4px 6px;border-radius:12px;min-height:44px}
+.quicklinks .ic{width:60px;height:60px;display:grid;place-items:center;transition:transform var(--ease)}
+.quicklinks .ic svg{width:56px;height:56px;overflow:visible;filter:saturate(1.25) contrast(1.06)}
+.quicklinks a:hover .ic{transform:translateY(-4px) scale(1.06)}
+.quicklinks a:hover{color:var(--brand)}
+
+/* Life situations — video-card style (thumb, category, title, meta) */
+.situations{background:var(--bg)}
+.sit-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter);row-gap:56px}
+.sit{grid-column:span 4;text-decoration:none;color:var(--text);display:block;border-radius:var(--radius)}
+.sit .thumb{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:var(--ink);box-shadow:var(--shadow)}
+.sit img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 400ms ease}
+.sit:hover img{transform:scale(1.04)}
+.sit .cat{display:block;margin-top:12px;font-size:.85rem;font-weight:700;color:var(--brand)}
+.sit h3{font-size:1.1rem;font-weight:700;margin-top:4px}
+.sit .by{color:var(--text-3);font-size:.9rem;margin-top:6px}
+
+/* Help TV — video cards + progress rail */
+.tv{background:var(--bg-2)}
+.tv-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gutter)}
+.tvc{grid-column:span 4;text-decoration:none;color:var(--text);display:block;border-radius:var(--radius)}
+.tvc .thumb{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:var(--ink);box-shadow:var(--shadow)}
+.tvc img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.tvc .dur{position:absolute;right:10px;bottom:10px;background:rgba(35,31,32,.9);color:#fff;font-size:.8rem;font-weight:700;padding:4px 8px;border-radius:6px}
+.tvc .play{position:absolute;left:50%;top:50%;translate:-50% -50%;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;color:var(--green-800);opacity:.95;transition:transform var(--ease)}
+.tvc:hover .play{transform:scale(1.08)}
+.tvc .play svg{width:22px;height:22px;fill:currentColor;margin-left:3px}
+.tvc .cat{display:block;margin-top:14px;font-size:.8rem;font-weight:800;color:var(--brand);text-transform:uppercase;letter-spacing:.06em}
+.tvc h3{font-size:1.1rem;font-weight:700;margin-top:4px}
+.tvc .by{color:var(--text-3);font-size:.9rem;margin-top:6px}
+.rail{display:flex;align-items:center;gap:16px;margin-top:28px}
+.rail .track{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.rail .track span{display:block;height:100%;width:33%;background:var(--brand);border-radius:3px}
+.rail button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+
+.rail svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* WA Cares feature band */
+.wacares{position:relative;overflow:hidden;isolation:isolate;background:var(--green-800);color:#fff}
+.wacares .pattern{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.wacares::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(62,97,24,.95),rgba(23,90,115,.95) 60%,rgba(72,50,107,.95))}
+.wacares .section-head h2,.wacares .section-head p{color:#fff}
+.wacares .section-head h2 em{color:#CFE59E}
+.wc-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gutter);align-items:center}
+.wc-copy{grid-column:span 5}
+.wc-copy h2{font-size:clamp(1.6rem,1.2rem + 1.4vw,2.2rem);font-weight:800}
+.wc-copy p{color:#E7EEF0;margin-top:12px;font-size:1.02rem}
+.wc-copy .btn{margin-top:18px}
+.wc-tiles{grid-column:7/13;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wc-tiles a{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:16px 12px;text-decoration:none;color:#fff;font-weight:700;font-size:.92rem;display:flex;flex-direction:column;gap:10px;min-height:110px;align-items:flex-start;justify-content:flex-end;backdrop-filter:blur(6px)}
+
+.wc-tiles svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wc-photo{grid-column:span 12;margin-top:28px;border-radius:var(--radius);overflow:hidden;aspect-ratio:16/5;box-shadow:var(--shadow)}
+.wc-photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+
+/* News — tabs, cards, app promo */
+.news{background:var(--bg);position:relative;overflow:hidden}
+.news .blob{position:absolute;width:520px;height:520px;border-radius:50%;background:var(--brand-soft);left:-260px;top:120px;z-index:0;opacity:.7}
+.news .container{position:relative;z-index:1}
+.tabs{display:flex;justify-content:center;gap:0;margin-bottom:28px}
+.tabs [role="tablist"]{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:auto;background:var(--surface);max-width:100%}
+.tabs [role="tab"]{min-height:44px;padding:0 20px;border:0;background:transparent;font-weight:600;color:var(--text-2);white-space:nowrap;border-right:1px solid var(--line)}
+.tabs [role="tab"]:last-child{border-right:0}
+.tabs [role="tab"][aria-selected="true"]{background:var(--ink);color:#fff}
+:root[data-theme="dark"] .tabs [role="tab"][aria-selected="true"],.dark-auto .tabs [role="tab"][aria-selected="true"]{background:var(--brand);color:var(--on-brand)}
+.news-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gutter)}
+.news-cards{grid-column:span 9;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gutter)}
+.nc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(0,0,0,.02);transition:transform var(--ease),box-shadow var(--ease)}
+.nc:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.nc .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.85rem;color:var(--text-3)}
+.nc .meta time{display:inline-flex;align-items:center;gap:6px}
+.nc .meta svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
+.badge{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--tertiary-soft);color:var(--tertiary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.badge.alert{background:#FDE8E8;color:#9B1C1C}
+.badge.info{background:var(--accent-soft);color:var(--accent)}
+.badge.event{background:var(--brand-soft);color:var(--green-800)}
+:root[data-theme="dark"] .badge.event{color:var(--brand)}
+:root[data-theme="dark"] .badge.alert{background:#4A1D1D;color:#FFB4B4}
+.nc h3{font-size:1.05rem;font-weight:800}
+.nc p{color:var(--text-2);font-size:.93rem;flex:1}
+.nc img{border-radius:10px;aspect-ratio:16/9;object-fit:cover;object-position:center top;width:100%}
+.app{grid-column:span 3;border-radius:var(--radius);padding:26px 22px;background:linear-gradient(180deg,var(--brand-soft),var(--accent-soft));color:var(--text);display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;border:1px solid var(--line)}
+.app h3{font-size:1.5rem;font-weight:800;color:var(--brand)}
+.app p{color:var(--text-2)}
+.app img{width:100%;max-width:220px;border-radius:14px;aspect-ratio:4/5;object-fit:cover;object-position:center top;box-shadow:var(--shadow);margin-top:6px}
+.app .btn{margin-top:auto;width:100%}
+
+/* Trust strip */
+.trust{background:var(--bg-2);border-top:1px solid var(--line)}
+.trust ul{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gutter)}
+.trust li{display:flex;gap:14px;align-items:center}
+.trust .n{font-size:2rem;font-weight:800;color:var(--brand);line-height:1}
+.trust small{display:block;color:var(--text-2);font-size:.9rem}
+
+/* Footer */
+footer{background:var(--footer);color:#EDE9E4;position:relative;overflow:hidden;padding-top:36px}
+.footer-links{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:18px;align-items:center}
+.footer-links a{color:#EDE9E4;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.footer-links a:hover{text-decoration:underline;color:#fff}
+.footer-links select{margin-left:auto;background:#2B2728;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;min-height:44px;padding:0 12px;font:inherit}
+.footer-main{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gutter);padding-block:26px;position:relative;z-index:1}
+.footer-main .addr{grid-column:span 5;font-size:.92rem;color:#CFC9C3;line-height:1.7}
+.footer-main .addr b{color:#fff;display:block;font-size:1rem;margin-bottom:4px}
+.footer-main .addr a{color:#fff}
+.badges{grid-column:6/13;display:flex;justify-content:flex-end;gap:26px;flex-wrap:wrap;align-items:center}
+.badges div{display:flex;align-items:center;gap:10px;font-size:.85rem;color:#DCD7D1;max-width:170px}
+.badges .seal{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:800;font-size:.7rem;color:#231F20}
+.social{display:flex;gap:8px;margin-top:14px}
+.social a{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;color:#fff}
+.social a:hover{background:rgba(255,255,255,.14)}
+.social svg{width:20px;height:20px;fill:currentColor}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:18px 26px;border-top:1px solid rgba(255,255,255,.14);font-size:.85rem;color:#CFC9C3;position:relative;z-index:1}
+.credit{display:inline-flex;align-items:center;gap:10px;color:#CFC9C3;text-decoration:none}
+.credit:hover{color:#fff}
+.credit img{height:34px;width:auto}
+/* Giant translucent DSHS — edge to edge of the 12-col grid, 10% visible */
+.giant{position:relative;z-index:0;pointer-events:none;user-select:none;height:clamp(90px,17vw,230px);overflow:hidden;margin-top:-10px}
+.giant svg{position:absolute;left:50%;translate:-50% 0;bottom:-6%;width:min(calc(100% - 2*var(--gutter)),calc(var(--maxw) - 2*var(--gutter)));height:auto;opacity:.10;overflow:visible}
+.giant text{fill:#fff;font-weight:900;font-family:inherit;letter-spacing:-.02em}
+
+/* 12-col grid overlay — press Shift+G to toggle (design QA only) */
+.grid-overlay{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
+.grid-overlay .container{height:100%;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter)}
+.grid-overlay span{background:rgba(75,163,195,.18);outline:1px solid rgba(75,163,195,.5)}
+.grid-overlay .label{position:fixed;top:8px;left:50%;translate:-50% 0;background:#231F20;color:#fff;font:600 12px/1 system-ui;padding:6px 10px;border-radius:6px}
+body.show-grid .grid-overlay{display:block}
+
+/* Sticky accessibility button */
+.a11y{position:fixed;right:20px;bottom:20px;z-index:150;width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;border:3px solid #fff;display:grid;place-items:center;box-shadow:var(--shadow)}
+:root[data-theme="dark"] .a11y{color:#0B2430;border-color:var(--bg)}
+.a11y:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.a11y svg{width:30px;height:30px;fill:currentColor}
+
+/* Crisis bar */
+.crisis{position:fixed;left:0;right:0;bottom:0;z-index:140;background:#FFF4D6;color:#5A3A00;border-top:1px solid #F1D48A;font-size:.92rem;box-shadow:0 -4px 16px rgba(0,0,0,.12)}
+.crisis[hidden]{display:none}
+.crisis .container{display:flex;gap:10px;align-items:center;min-height:34px;flex-wrap:wrap;padding-right:60px;font-size:.82rem;line-height:1.3}
+.crisis-988{margin-left:auto}
+.crisis-close{position:absolute;right:var(--gutter);top:50%;translate:0 -50%;width:28px;height:28px;border-radius:50%;border:1px solid #C9A24A;background:#fff;color:#5A3A00;display:grid;place-items:center;padding:0}
+.crisis-close:hover{background:#F1D48A}
+.crisis-close::after{content:"";position:absolute;inset:-8px}
+.crisis-close svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.crisis .container{position:relative}
+body.has-alert{padding-bottom:36px}
+body.has-alert .a11y{bottom:56px}
+:root[data-theme="dark"] .crisis-close{background:#5C4310;color:#FFE7A8;border-color:#8A6A2A}
+.crisis a{color:#5A3A00;font-weight:700}
+:root[data-theme="dark"] .crisis{background:#3A2A08;color:#FFE7A8;border-color:#5C4310}
+:root[data-theme="dark"] .crisis a{color:#FFE7A8}
+
+/* Toast for live announcements */
+.toast{position:fixed;left:50%;bottom:96px;translate:-50% 0;background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity var(--ease);z-index:160}
+.toast[data-show="true"]{opacity:1}
+
+/* =============== RESPONSIVE (desktop untouched ≥1200) =============== */
+@media (max-width:1199px){
+  .nav{display:none}
+  .hero-cards{position:static;flex-wrap:wrap;gap:16px;padding:20px 0 0}
+  .hero-stage{margin-top:14px}
+  .card-dark,.card-light{border-radius:12px;margin-top:0;flex:1 1 260px}
+  .hero-copy{grid-column:1/13}
+  .hero-media{border-radius:16px;min-height:396px}
+  .quicklinks ul{grid-template-columns:repeat(5,1fr)}
+  .sit{grid-column:span 6}
+  .tvc{grid-column:span 6}
+  .wc-copy{grid-column:span 12}.wc-tiles{grid-column:span 12}
+  .news-cards{grid-column:span 12;grid-template-columns:repeat(2,1fr)}
+  .app{grid-column:span 12;flex-direction:row;text-align:left;align-items:center}
+  .app img{max-width:150px}
+  .trust ul{grid-template-columns:repeat(2,1fr)}
+  .footer-main .addr,.badges{grid-column:span 12;justify-content:flex-start}
+}
+@media (max-width:767px){
+  :root{--gutter:16px}
+  .section{padding-block:44px}
+  .utility ul li:nth-child(n+3){display:none}
+  .header .container{grid-template-columns:auto 1fr;min-height:64px}
+  .logo .mark{height:36px}.logo .word span{display:none}
+  .hero{padding-top:0}
+  .hero-stage{margin-top:16px}
+  .hero-media{aspect-ratio:4/3;min-height:0;overflow:visible;border-radius:16px}
+  .reel{border-radius:16px;overflow:hidden}
+  .hero-media::after{border-radius:16px}
+  .hero-search{position:static;padding:14px 0 0}
+  .hero-search-row{margin-bottom:10px}
+  .reel-nav > button,.dots button::before{color:var(--text)}
+  .dots button::before{background:var(--line)}
+  .dots button[aria-current="true"]::before{background:var(--brand)}
+  .chips button{background:var(--surface);color:var(--text-2);border-color:var(--line)}
+  .ai-search{height:56px}
+  .ai-search input{font-size:.95rem}
+  .chips{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;scrollbar-width:thin}
+  .chips button{flex:none}
+  .quicklinks ul{grid-template-columns:repeat(3,1fr)}
+  .quicklinks .ic{width:50px;height:50px}
+  .quicklinks .ic svg{width:46px;height:46px}
+  .tabs{justify-content:flex-start}
+  .tabs [role="tablist"]{width:100%}
+  .tabs [role="tab"]{flex:1 0 auto;min-width:110px}
+  .trust ul{grid-template-columns:1fr}
+  .footer-links select{margin-left:0;width:100%}
+  .a11y{right:14px;bottom:14px;width:56px;height:56px}
+  body.has-alert{padding-bottom:64px}
+  body.has-alert .a11y{bottom:78px}
+  .crisis-988{margin-left:0}
+  .toast{bottom:84px}
+
+  /* ---- Card DECK (playing-card stack) for cards on mobile ---- */
+  .deck{position:relative;display:block;height:var(--deck-h,420px);perspective:1200px}
+  .deck > *{position:absolute;inset:0;grid-column:auto;transform-origin:50% 100%;transition:transform 350ms cubic-bezier(.2,.7,.2,1),opacity 350ms;will-change:transform;height:100%}
+  .deck > [data-pos="0"]{transform:translateY(0) rotate(0deg) scale(1);z-index:5}
+  .deck > [data-pos="1"]{transform:translateY(-14px) rotate(-3deg) scale(.96);z-index:4;filter:brightness(.92)}
+  .deck > [data-pos="2"]{transform:translateY(-26px) rotate(3deg) scale(.92);z-index:3;filter:brightness(.85)}
+  .deck > [data-pos="3"]{transform:translateY(-36px) rotate(-1.5deg) scale(.88);z-index:2;filter:brightness(.8)}
+  .deck > [data-pos="4"],.deck > [data-pos="5"],.deck > [data-pos="6"],.deck > [data-pos="7"],.deck > [data-pos="8"]{transform:translateY(-44px) scale(.84);z-index:1;opacity:0}
+  .deck > .leaving{transform:translateX(110%) rotate(12deg) !important;opacity:0;z-index:6}
+  .deck > *:not([data-pos="0"]){pointer-events:none}
+  .deck .nc{height:100%;overflow:hidden}
+  .deck .nc img{max-height:150px}
+  .deck-ctrl{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:18px}
+  .deck-ctrl button{min-width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;font-weight:700}
+  
+  .deck-ctrl output{font-variant-numeric:tabular-nums;color:var(--text-2);min-width:60px;text-align:center}
+  .deck-ctrl svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .sit-grid.deck{--deck-h:330px}
+  .sit-grid.deck .sit{background:var(--surface);border-radius:var(--radius);padding:12px;border:1px solid var(--line)}
+  .tv-grid.deck{--deck-h:330px}
+  .tv-grid.deck .tvc{background:var(--surface);border-radius:var(--radius);padding:12px;border:1px solid var(--line)}
+  .news-cards.deck{--deck-h:380px}
+  .news-grid{display:block}
+  .app{margin-top:24px;flex-direction:column;text-align:center}
+}
+@media (min-width:768px){.deck-ctrl{display:none}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media (prefers-contrast:more){:root{--line:#8a8a8a}.nc,.icon-btn{border-width:2px}}
+@media print{.utility,.header .tools,.a11y,.giant,.hero-media,.drawer{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<!-- Utility bar (module 01) -->
+<div class="utility">
+  <div class="container">
+    <ul>
+      <li><a href="https://wa.gov" aria-label="Washington State official website"><span class="flag" aria-hidden="true"></span>An official Washington State website</a></li>
+      <li><a href="#" aria-label="Report abuse and neglect">Report Abuse</a></li>
+      <li><a href="#" aria-label="Find a DSHS office">Office Locator</a></li>
+    </ul>
+    <ul>
+      <li><button type="button" id="langBtn" aria-haspopup="listbox" aria-expanded="false">🌐&nbsp;English <span aria-hidden="true">▾</span></button></li>
+      <li><a href="#">Sign in</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Header (module 02) -->
+<header class="header">
+  <div class="container">
+    <a class="logo" href="#" aria-label="DSHS — Washington State Department of Social and Health Services, home">
+      <img class="mark" src="dshs-mark.png" alt="" width="408" height="264">
+      <span class="word"><b>DSHS</b><span>Washington State Department of<br>Social and Health Services</span></span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#" aria-current="page">Get Help</a>
+      <a href="#">My Benefits</a>
+      <a href="#">Services &amp; Programs</a>
+      <a href="#">Resources</a>
+      <a href="#">Find Provider / Office</a>
+      <a href="#wacares">WA Cares</a>
+      <a href="#">About</a>
+    </nav>
+
+    <div class="tools">
+      <button type="button" class="icon-btn theme-switch" id="themeSwitch" role="switch" aria-checked="false" aria-label="Dark theme" title="Toggle dark theme (auto by time of day until you choose)">
+        <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile / compact navigation drawer -->
+<div class="drawer" id="drawer" data-open="false" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="scrim" data-close></div>
+  <nav class="panel" aria-label="Primary (menu)">
+    <button type="button" class="icon-btn close" data-close aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <a href="#" aria-current="page">Get Help</a><a href="#">My Benefits</a><a href="#">Services &amp; Programs</a><a href="#">Resources</a><a href="#">Find Provider / Office</a><a href="#wacares">WA Cares</a><a href="#">About</a>
+    <hr style="border:0;border-top:1px solid var(--line);margin:8px 0">
+    <a href="#">Sign in</a><a href="#">Report Abuse</a><a href="#">Office Locator</a><a href="#">Language: English</a>
+  </nav>
+</div>
+
+<main id="main">
+
+  <!-- HERO (module 03) -->
+  <section class="hero" aria-labelledby="hero-h">
+    <h1 id="hero-h" class="sr-only">How can we help you today?</h1>
+
+    <div class="hero-stage container">
+    <div class="hero-media">
+      <div class="reel" id="reel" aria-hidden="true">
+        <video class="is-active" muted playsinline preload="auto" autoplay><source src="hero-video.mp4" type="video/mp4"></video>
+        <video muted playsinline preload="metadata"><source src="hero-video-2.mp4" type="video/mp4"></video>
+        <video muted playsinline preload="metadata"><source src="hero-video-3.mp4" type="video/mp4"></video>
+      </div>
+      <button type="button" class="vid-btn" id="vidToggle" aria-pressed="true" aria-label="Pause background video">
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+
+      <!-- AI intent search — overlaid, 40px from the bottom of the video -->
+      <div class="hero-search" id="intent">
+        <div class="hero-search-row">
+          <div class="reel-nav" role="group" aria-label="Background videos">
+            <button type="button" id="reelPrev" aria-label="Previous video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+            <div class="dots" id="reelDots"><button type="button" aria-label="Video 1" aria-current="true"></button><button type="button" aria-label="Video 2"></button><button type="button" aria-label="Video 3"></button></div>
+            <button type="button" id="reelNext" aria-label="Next video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+          </div>
+          <div class="chips" aria-label="Common needs">
+            <button type="button" data-q="I need help buying food">I need food help</button>
+            <button type="button" data-q="I need help caring for my parent">Help caring for my parent</button>
+            <button type="button" data-q="Am I eligible for WA Cares?">Am I eligible for WA Cares?</button>
+          </div>
+        </div>
+        <form class="ai-search" role="search" action="#" onsubmit="return false">
+          <span class="ai-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/><path d="M4 14l.7 1.6L6.3 16l-1.6.7L4 18.3l-.7-1.6L1.7 16l1.6-.4z"/></svg>
+          </span>
+          <label for="q" class="sr-only">Ask DSHS AI what you need, in your own words</label>
+          <input id="q" name="q" type="search" placeholder="AI instant search — tell us what’s happening, e.g. “I lost my job and need food”" autocomplete="off">
+          <button type="submit" aria-label="Ask"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Overlapping quick-service cards (Gestalt: figure/ground, common region) -->
+    <div class="hero-cards">
+      <form class="card-dark" action="#" onsubmit="return false" aria-labelledby="qs-h">
+        <h2 id="qs-h">Check My Status</h2>
+        <label for="caseid">Client ID or confirmation number</label>
+        <input id="caseid" name="caseid" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 123456789">
+        <button class="btn btn-inverse" type="submit">Track my application</button>
+        <p class="hours"><strong>Contact center</strong><br>Mon – Fri 8:00 – 17:00<br>Interpreters available in 200+ languages</p>
+      </form>
+      <div class="card-light">
+        <h2>Quick Services</h2>
+        <nav class="quick2" aria-label="Quick services">
+          <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 17h6"/></svg>Apply for benefits</a>
+          <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>Upload documents</a>
+        </nav>
+        <a class="phone" href="tel:+18775014051">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.9 2.1z"/></svg>
+          <span><b>1-877-501-2233</b><span>Customer Service Contact Center</span></span>
+        </a>
+      </div>
+    </div>
+    </div><!-- /hero-stage -->
+  </section>
+
+  <!-- QUICK LINKS ICON ROW (module 05) — realistic 3D icons -->
+  <nav class="quicklinks" aria-label="Popular tasks">
+    <div class="container">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-green" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D4FF5C"/><stop offset="1" stop-color="#22B31E"/></linearGradient>
+    <linearGradient id="g-blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6CF0FF"/><stop offset="1" stop-color="#0072FF"/></linearGradient>
+    <linearGradient id="g-purple" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4B5FF"/><stop offset="1" stop-color="#8A2BE2"/></linearGradient>
+    <linearGradient id="g-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E9EEF2"/></linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF35C"/><stop offset="1" stop-color="#FF8A00"/></linearGradient>
+    <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7B7B"/><stop offset="1" stop-color="#F0002E"/></linearGradient>
+    <linearGradient id="g-gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <filter id="f-3d" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="3" stdDeviation="1.6" flood-color="#231F20" flood-opacity=".42"/></filter>
+    <filter id="f-inner" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1"/></filter>
+  </defs>
+</svg>
+      <ul>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><rect x="12" y="10" width="36" height="46" rx="6" fill="url(#g-green)"/><rect x="17" y="16" width="26" height="36" rx="3" fill="url(#g-paper)"/><rect x="24" y="6" width="16" height="9" rx="3" fill="#1B8F1A"/><rect x="21" y="26" width="18" height="3" rx="1.5" fill="#8FA3B8"/><rect x="21" y="33" width="14" height="3" rx="1.5" fill="#8FA3B8"/><rect x="21" y="40" width="16" height="3" rx="1.5" fill="#8FA3B8"/><path d="M38 50l10-10 5 5-10 10-6 1z" fill="url(#g-purple)"/><path d="M48 40l5 5 2-2a3.5 3.5 0 0 0-5-5z" fill="#FFB347"/></g><rect x="12" y="10" width="36" height="20" rx="6" fill="url(#g-gloss)"/></svg></span>Apply for<br>Benefits</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><circle cx="32" cy="34" r="24" fill="url(#g-blue)"/><circle cx="32" cy="34" r="18" fill="url(#g-paper)"/><path d="M32 22v13l9 5" stroke="#175A73" stroke-width="3.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="35" r="2.5" fill="#8A2BE2"/></g><ellipse cx="32" cy="22" rx="20" ry="9" fill="url(#g-gloss)"/></svg></span>Check<br>Status</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><circle cx="32" cy="34" r="24" fill="url(#g-green)"/><path d="M20 34a12 12 0 0 1 20-9" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M42 20v8h-8" fill="#fff"/><path d="M44 34a12 12 0 0 1-20 9" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M22 48v-8h8" fill="#fff"/></g><ellipse cx="32" cy="22" rx="20" ry="9" fill="url(#g-gloss)"/></svg></span>Renew or<br>Report Changes</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><path d="M8 20a5 5 0 0 1 5-5h12l5 5h21a5 5 0 0 1 5 5v26a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5z" fill="url(#g-blue)"/><path d="M8 28h48v18a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5z" fill="#8FD3EA"/><path d="M32 46V32" stroke="#175A73" stroke-width="5" stroke-linecap="round"/><path d="M24 39l8-8 8 8" stroke="#175A73" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g><path d="M8 20a5 5 0 0 1 5-5h12l5 5h21a5 5 0 0 1 5 5v3H8z" fill="url(#g-gloss)"/></svg></span>Upload<br>Documents</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><rect x="10" y="30" width="44" height="26" rx="4" fill="url(#g-paper)"/><rect x="16" y="36" width="8" height="8" rx="1.5" fill="#22B8F0"/><rect x="28" y="36" width="8" height="8" rx="1.5" fill="#22B8F0"/><rect x="40" y="36" width="8" height="8" rx="1.5" fill="#22B8F0"/><rect x="27" y="47" width="10" height="9" rx="1.5" fill="#8A2BE2"/><path d="M32 6c-8 0-14 6-14 13 0 10 14 21 14 21s14-11 14-21c0-7-6-13-14-13z" fill="url(#g-red)"/><circle cx="32" cy="19" r="5.5" fill="#fff"/></g><path d="M32 6c-8 0-14 6-14 13h28c0-7-6-13-14-13z" fill="url(#g-gloss)"/></svg></span>Find an<br>Office</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><rect x="10" y="12" width="44" height="44" rx="8" fill="url(#g-purple)"/><circle cx="32" cy="30" r="8" fill="#FFE1C9"/><path d="M18 52a14 10 0 0 1 28 0z" fill="#fff"/><path d="M26 10h12v6H26z" rx="2" fill="#1B8F1A"/><path d="M40 40h7v7h-7z" fill="#3ED11C" transform="rotate(45 43.5 43.5)"/></g><rect x="10" y="12" width="44" height="18" rx="8" fill="url(#g-gloss)"/></svg></span>Find a<br>Provider</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><rect x="14" y="8" width="36" height="48" rx="6" fill="url(#g-green)"/><rect x="19" y="13" width="26" height="12" rx="3" fill="#EAF8D3"/><g fill="#fff"><rect x="19" y="30" width="7" height="6" rx="1.5"/><rect x="28.5" y="30" width="7" height="6" rx="1.5"/><rect x="38" y="30" width="7" height="6" rx="1.5"/><rect x="19" y="39" width="7" height="6" rx="1.5"/><rect x="28.5" y="39" width="7" height="6" rx="1.5"/><rect x="19" y="48" width="16.5" height="5" rx="1.5"/></g><rect x="38" y="39" width="7" height="14" rx="1.5" fill="url(#g-gold)"/></g><rect x="14" y="8" width="36" height="18" rx="6" fill="url(#g-gloss)"/></svg></span>Benefits<br>Calculator</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><rect x="18" y="8" width="30" height="40" rx="4" fill="#C4ADE3" transform="rotate(8 33 28)"/><rect x="14" y="12" width="30" height="40" rx="4" fill="url(#g-blue)" transform="rotate(-4 29 32)"/><rect x="16" y="16" width="30" height="40" rx="4" fill="url(#g-paper)"/><rect x="21" y="24" width="20" height="3" rx="1.5" fill="#0072FF"/><rect x="21" y="31" width="16" height="3" rx="1.5" fill="#8FA3B8"/><rect x="21" y="38" width="18" height="3" rx="1.5" fill="#8FA3B8"/><rect x="21" y="45" width="12" height="3" rx="1.5" fill="#8FA3B8"/></g></svg></span>Forms &amp;<br>Publications</a></li>
+        <li><a href="#"><span class="ic"><svg viewBox="0 0 64 64" aria-hidden="true"><g filter="url(#f-3d)"><path d="M32 6l22 8v16c0 13-9 23-22 28C19 53 10 43 10 30V14z" fill="url(#g-red)"/><path d="M32 12l16 6v12c0 10-7 18-16 22-9-4-16-12-16-22V18z" fill="url(#g-paper)"/><path d="M32 22v12" stroke="#B42323" stroke-width="4.5" stroke-linecap="round"/><circle cx="32" cy="41" r="2.8" fill="#F0002E"/></g><path d="M32 6l22 8v10H10V14z" fill="url(#g-gloss)"/></svg></span>Report Abuse<br>or Fraud</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- LIFE SITUATIONS (module 06) -->
+  <section class="situations section" aria-labelledby="sit-h">
+    <div class="container">
+      <div class="head-row">
+        <div class="section-head"><h2 id="sit-h">Start with <em>your situation</em></h2><p>Real people, real needs — pick the one closest to yours.</p></div>
+        <a class="link-more" href="#">All services &amp; programs <span aria-hidden="true">+</span></a>
+      </div>
+      <div class="sit-grid" data-deck="sit">
+        <a class="sit" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&h=506&q=80" alt="A father lifts groceries into a bag while his daughter watches" loading="lazy"></div><span class="cat">Food &amp; basic needs</span><h3>I need help with food</h3><p class="by">Basic Food (SNAP) &nbsp;|&nbsp; SUN Bucks &nbsp;|&nbsp; WIC</p></a>
+        <a class="sit" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=900&h=506&q=80" alt="An adult daughter sits close beside her elderly mother, holding her hand" loading="lazy"></div><span class="cat">Aging &amp; caregiving</span><h3>I'm caring for an aging parent</h3><p class="by">In-home care &nbsp;|&nbsp; Respite &nbsp;|&nbsp; WA Cares</p></a>
+        <a class="sit" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&h=506&q=80" alt="A woman reviews bills at a kitchen table" loading="lazy"></div><span class="cat">Housing &amp; cash</span><h3>I'm behind on rent or bills</h3><p class="by">TANF &nbsp;|&nbsp; HEN &nbsp;|&nbsp; Disaster Cash Assistance</p></a>
+        <a class="sit" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&w=900&h=506&q=80" alt="A man who uses a wheelchair smiles while working at a laptop" loading="lazy"></div><span class="cat">Disability</span><h3>I live with a disability</h3><p class="by">DDA &nbsp;|&nbsp; Vocational Rehabilitation &nbsp;|&nbsp; SSI</p></a>
+        <a class="sit" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=900&h=506&q=80" alt="A mother holds her toddler on her lap at home" loading="lazy"></div><span class="cat">Family &amp; children</span><h3>I need child support or family help</h3><p class="by">Child Support &nbsp;|&nbsp; Child Care &nbsp;|&nbsp; Youth Services</p></a>
+        <a class="sit" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=900&h=506&q=80" alt="A young man talks with a counselor in a calm office" loading="lazy"></div><span class="cat">Behavioral health</span><h3>I'm struggling with my mental health</h3><p class="by">988 Crisis Line &nbsp;|&nbsp; Treatment &nbsp;|&nbsp; State Hospitals</p></a>
+      </div>
+      <div class="deck-ctrl" data-deck-ctrl="sit" hidden>
+        <button type="button" data-prev aria-label="Previous card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+        <output aria-live="polite">1 / 6</output>
+        <button type="button" data-next><span>Next card</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      </div>
+      <div class="rail" aria-hidden="true"><button type="button" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button><div class="track"><span></span></div><button type="button" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>
+    </div>
+  </section>
+
+  <!-- HELP TV (parallel to "Health TV") -->
+  <section class="tv section" aria-labelledby="tv-h">
+    <div class="container">
+      <div class="head-row">
+        <div class="section-head"><h2 id="tv-h">DSHS <em>Help TV</em></h2><p>Short, captioned videos that walk you through common tasks.</p></div>
+        <a class="link-more" href="#">View all <span aria-hidden="true">+</span></a>
+      </div>
+      <div class="tv-grid" data-deck="tv">
+        <a class="tvc" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&h=506&q=80" alt="Video: a caseworker explains the application to a client at a desk" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="dur">5:32</span></div><span class="cat">How-to</span><h3>Applying for Basic Food online in under 20 minutes</h3><p class="by">Community Services Division · Captions &amp; ASL available</p></a>
+        <a class="tvc" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&w=900&h=506&q=80" alt="Video: a home-care aide helps an older woman in her living room" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="dur">4:18</span></div><span class="cat">WA Cares</span><h3>What WA Cares pays for — and how to plan ahead</h3><p class="by">Aging &amp; Long-Term Support Administration</p></a>
+        <a class="tvc" href="#"><div class="thumb"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&h=506&q=80" alt="Video: a parent photographs a document with a phone for upload" loading="lazy"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="dur">6:27</span></div><span class="cat">My Documents</span><h3>Uploading documents from your phone, step by step</h3><p class="by">Economic Services Administration</p></a>
+      </div>
+      <div class="deck-ctrl" data-deck-ctrl="tv" hidden>
+        <button type="button" data-prev aria-label="Previous video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+        <output aria-live="polite">1 / 3</output>
+        <button type="button" data-next><span>Next video</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      </div>
+      <div class="rail" aria-hidden="true"><button type="button" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button><div class="track"><span></span></div><button type="button" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>
+    </div>
+  </section>
+
+  <!-- WA CARES FEATURE (module 08) -->
+  <section class="wacares section" id="wacares" aria-labelledby="wc-h">
+    <video class="pattern" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="pattern.mp4" type="video/mp4"></video>
+    <div class="container wc-grid">
+      <div class="wc-copy">
+        <p class="eyebrow" style="color:#DCE9C8">WA Cares Fund</p>
+        <h2 id="wc-h">Long-term care benefits you've already been earning.</h2>
+        <p>Starting July 2026, eligible Washington workers can use up to $36,500 (adjusted for inflation) for in-home care, equipment, meals, respite and more — and from 2030, even if you've moved out of state.</p>
+        <a class="btn" href="#">Am I eligible for WA Cares? →</a>
+      </div>
+      <div class="wc-tiles">
+        <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Check eligibility</a>
+        <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 14h4"/></svg>Benefit calculator</a>
+        <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Find a care provider</a>
+        <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2 2 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Plan my care</a>
+        <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Apply &amp; track status</a>
+        <a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Use benefits out of state</a>
+      </div>
+      <div class="wc-photo"><img src="wa-cares.jpg" alt="A farmer kneels in a sunlit field harvesting carrots beside a full crate of vegetables" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- NEWS (module 11) -->
+  <section class="news section" aria-labelledby="news-h">
+    <div class="blob" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-head"><h2 id="news-h">DSHS <em>News &amp; Alerts</em></h2><p>Deadlines, program changes and updates that may affect your benefits.</p></div>
+      <div class="tabs">
+        <div role="tablist" aria-label="Filter news">
+          <button role="tab" aria-selected="true" aria-controls="newsPanel" id="tab-all">All</button>
+          <button role="tab" aria-selected="false" aria-controls="newsPanel" id="tab-alerts" tabindex="-1">Service Alerts</button>
+          <button role="tab" aria-selected="false" aria-controls="newsPanel" id="tab-benefits" tabindex="-1">Benefit Changes</button>
+          <button role="tab" aria-selected="false" aria-controls="newsPanel" id="tab-events" tabindex="-1">Events</button>
+          <button role="tab" aria-selected="false" aria-controls="newsPanel" id="tab-press" tabindex="-1">Press Releases</button>
+        </div>
+      </div>
+      <div class="news-grid" id="newsPanel" role="tabpanel" aria-labelledby="tab-all">
+        <div class="news-cards" data-deck="news">
+          <a class="nc" href="#" data-cat="alerts"><img src="https://images.unsplash.com/photo-1602867741746-6df80f40b3f6?auto=format&fit=crop&w=800&h=450&q=80" alt="Wildfire smoke over a Washington hillside" loading="lazy"><div class="meta"><time datetime="2026-08-28"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Aug 28, 2026</time><span class="badge alert">Service alert</span></div><h3>Disaster Cash Assistance expands to five more counties</h3><p>Households affected by wildfires can apply through Oct. 30 or until funds are depleted.</p></a>
+          <a class="nc" href="#" data-cat="benefits"><div class="meta"><time datetime="2026-09-09"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Sep 9, 2026</time><span class="badge info">Benefit change</span></div><h3>H.R. 1 webinar: noncitizen eligibility for SNAP &amp; Medicaid</h3><p>Join today's session on how federal legislation changes Basic Food and medical eligibility.</p></a>
+          <a class="nc" href="#" data-cat="benefits"><div class="meta"><time datetime="2026-06-15"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Jun 15, 2026</time><span class="badge info">Benefit change</span></div><h3>SUN Bucks summer cards are on the way</h3><p>New cards are mailed automatically — please don't request a replacement. Delivery may take longer than usual.</p></a>
+          <a class="nc" href="#" data-cat="events"><div class="meta"><time datetime="2026-09-20"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Sep 20, 2026</time><span class="badge event">Event</span></div><h3>Mobile Community Services Office visits Yakima &amp; Wenatchee</h3><p>Apply, upload documents and meet a caseworker in person — no appointment needed.</p></a>
+          <a class="nc" href="#" data-cat="press"><div class="meta"><time datetime="2026-08-12"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Aug 12, 2026</time><span class="badge">Press release</span></div><h3>Washington Economic Justice Alliance publishes 2026 impact report</h3><p>DSHS-hosted work toward a Washington free of poverty, where everyone can thrive.</p></a>
+          <a class="nc" href="#" data-cat="alerts"><div class="meta"><time datetime="2026-03-30"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Mar 30, 2026</time><span class="badge alert">Notice</span></div><h3>Notice of data breach and how affected clients are being contacted</h3><p>What happened, what information was involved, and the steps DSHS is taking.</p></a>
+        </div>
+        <aside class="app" aria-labelledby="app-h">
+          <h3 id="app-h">MyWABenefits App</h3>
+          <p>Your status, notices and documents — in your pocket.</p>
+          <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&h=750&q=80" alt="A hand holding a phone showing a benefits dashboard" loading="lazy">
+          <a class="btn" href="#">Download the app →</a>
+        </aside>
+      </div>
+      <div class="deck-ctrl" data-deck-ctrl="news" hidden>
+        <button type="button" data-prev aria-label="Previous story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+        <output aria-live="polite">1 / 6</output>
+        <button type="button" data-next><span>Next story</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="trust section" aria-label="DSHS at a glance" style="padding-block:40px">
+    <div class="container">
+      <ul>
+        <li><span class="n">1 in 4</span><small>Washingtonians served by DSHS each year</small></li>
+        <li><span class="n">200+</span><small>languages supported by phone and in person</small></li>
+        <li><span class="n">24/7</span><small>crisis support — call or text 988</small></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER (module 12) -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="#">Privacy Notice</a><a href="#">Accessibility Statement</a><a href="#">Nondiscrimination Policy</a><a href="#">Site Map</a><a href="#">Contact Us</a><a href="#">Client Rights &amp; Appeals</a><a href="#">Public Records</a><a href="#">Staff Access</a>
+      <label class="sr-only" for="fam">Related sites</label>
+      <select id="fam"><option>Related sites</option><option>WA Cares Fund</option><option>Washington Connection</option><option>MyWABenefits</option><option>Health Care Authority</option><option>wa.gov</option></select>
+    </div>
+    <div class="footer-main">
+      <div class="addr">
+        <b>Washington State Department of Social and Health Services</b>
+        1115 Washington St. SE, Olympia, WA 98501<br>
+        Customer Service: <a href="tel:+18775012233">1-877-501-2233</a> · TTY: <a href="tel:711">711</a><br>
+        <div class="social" aria-label="DSHS on social media">
+          <a href="https://www.facebook.com/WaStateDSHS" aria-label="DSHS on Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></a>
+          <a href="https://twitter.com/waDSHS" aria-label="DSHS on X (Twitter)"><svg viewBox="0 0 24 24"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.5L4.6 21h-3l7.5-8.6L1.5 3H8l4.5 6z"/></svg></a>
+          <a href="https://www.youtube.com/user/WashingtonStateDSHS" aria-label="DSHS on YouTube"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.6-.5-5.3a2.8 2.8 0 0 0-2-2C18.8 4.2 12 4.2 12 4.2s-6.8 0-8.5.5a2.8 2.8 0 0 0-2 2C1 8.4 1 12 1 12s0 3.6.5 5.3a2.8 2.8 0 0 0 2 2c1.7.5 8.5.5 8.5.5s6.8 0 8.5-.5a2.8 2.8 0 0 0 2-2c.5-1.7.5-5.3.5-5.3zM9.8 15.5v-7l6 3.5z"/></svg></a>
+          <a href="https://www.linkedin.com/company/washingtondepartmentofsocialandhealthservices" aria-label="DSHS on LinkedIn"><svg viewBox="0 0 24 24"><path d="M6.5 8.5H3V21h3.5zM4.7 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM21 13.4c0-3.4-1.8-5.2-4.6-5.2a4 4 0 0 0-3.6 2V8.5H9.4V21h3.5v-6.6c0-1.7.7-2.8 2.2-2.8s2.4 1 2.4 2.8V21H21z"/></svg></a>
+          <a href="https://dshswa.medium.com/" aria-label="DSHS on Medium"><svg viewBox="0 0 24 24"><path d="M7 6.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm8.5.5c1.5 0 2.5 2.2 2.5 5s-1 5-2.5 5-2.5-2.2-2.5-5 1-5 2.5-5zm5 .8c.6 0 1 1.9 1 4.2s-.4 4.2-1 4.2-1-1.9-1-4.2.4-4.2 1-4.2z"/></svg></a>
+        </div>
+      </div>
+      <div class="badges">
+        <div><span class="seal" style="background:#76A43B">WA</span>Official Washington State agency</div>
+        <div><span class="seal" style="background:#4BA3C3">AA</span>WCAG 2.2 AA accessibility commitment</div>
+        <div><span class="seal" style="background:#C9B8E6">ADA</span>Reasonable accommodations &amp; language access</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Washington State Department of Social and Health Services. All rights reserved.</div>
+      <a class="credit" href="https://www.compunneldigital.com" rel="noopener" aria-label="Website design by Compunnel Digital">
+        Website Design by
+        <img src="compunnel-digital.svg" alt="Compunnel Digital" width="1699" height="800">
+      </a>
+    </div>
+  </div>
+  <div class="giant" aria-hidden="true">
+    <svg viewBox="0 0 1000 200" preserveAspectRatio="none"><text x="-4" y="190" textLength="1008" lengthAdjust="spacingAndGlyphs" font-size="230">DSHS</text></svg>
+  </div>
+</footer>
+
+<div class="crisis" id="alertBar" role="region" aria-label="Service alert">
+  <div class="container">
+    <span><strong>Alert:</strong> Disaster Cash Assistance is available for residents affected by 2026 wildfires through Oct. 30. <a href="#">Check eligibility →</a></span>
+    <span class="crisis-988">In crisis? Call or text <a href="tel:988">988</a></span>
+    <button type="button" class="crisis-close" id="alertClose" aria-label="Dismiss alert"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
+<button type="button" class="a11y" aria-label="Accessibility options" title="Accessibility options">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M19 13v-2c-1.5.3-3 .5-4.5.6V9.4c1.6-.1 3.1-.4 4.5-.8V6.5c-2.2.7-4.6 1-7 1s-4.8-.3-7-1v2.1c1.4.4 2.9.7 4.5.8v2.2C8 11.5 6.5 11.3 5 11v2c1.5.3 3 .5 4.5.6v.9L7.2 21h2.2l2.2-5.2h.8l2.2 5.2h2.2l-2.3-6.5v-.9c1.5-.1 3-.3 4.5-.6z"/></svg>
+</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="grid-overlay" aria-hidden="true"><div class="container"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="label">12 columns · 1280px max · 24px gutters — Shift+G to hide</div></div>
+
+<script>
+(function(){
+  /* ---------- THEME: Light / Dark / Auto (auto = time of day in the user's local timezone) ---------- */
+  const root=document.documentElement, KEY='dshs-theme', sw=document.getElementById('themeSwitch');
+  const toast=document.getElementById('toast'); let toastT;
+  function say(msg){toast.textContent=msg;toast.dataset.show='true';clearTimeout(toastT);toastT=setTimeout(()=>toast.dataset.show='false',2200)}
+  function daylight(){
+    // Approximate sunrise/sunset by month for Washington-State latitudes, in the visitor's local clock.
+    const d=new Date(), m=d.getMonth(), h=d.getHours()+d.getMinutes()/60;
+    const sunrise=[7.8,7.3,6.7,6.3,5.6,5.2,5.4,6.0,6.7,7.3,7.0,7.7][m];
+    const sunset =[16.8,17.5,18.2,19.0,19.8,20.4,20.4,19.8,18.8,17.9,16.6,16.4][m];
+    return h>=sunrise && h<sunset;
+  }
+  // 'auto' (time of day) until the user flips the switch; then 'light' | 'dark', persisted
+  let choice='auto'; try{choice=localStorage.getItem(KEY)||'auto'}catch(e){}
+  function apply(announce){
+    const eff = choice==='auto' ? (daylight()?'light':'dark') : choice;
+    root.setAttribute('data-theme',eff); root.style.colorScheme=eff;
+    sw.setAttribute('aria-checked',String(eff==='dark'));
+    sw.title = choice==='auto' ? `Auto (${eff} by your local time) — click to override` : `${eff==='dark'?'Dark':'Light'} theme — click to switch`;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',eff==='dark'?'#231F20':'#4F7A1F');
+    if(announce) say(`${eff==='dark'?'Dark':'Light'} theme on`);
+  }
+  apply(false);
+  sw.addEventListener('click',()=>{choice = root.getAttribute('data-theme')==='dark'?'light':'dark'; try{localStorage.setItem(KEY,choice)}catch(e){} apply(true)});
+  setInterval(()=>{if(choice==='auto')apply(false)},60000);
+
+  /* ---------- HERO REEL: 3 rotating videos, arrows + dots, tiny play/pause (WCAG 2.2.2) ---------- */
+  const vids=[...document.querySelectorAll('#reel video')], dots=[...document.querySelectorAll('#reelDots button')], vt=document.getElementById('vidToggle');
+  let cur=0, playing=!matchMedia('(prefers-reduced-motion: reduce)').matches, rot;
+  const HOLD=9000; // ms per clip before advancing (also advances on 'ended')
+  function show(i){cur=(i+vids.length)%vids.length;
+    vids.forEach((v,k)=>{const on=k===cur; v.classList.toggle('is-active',on); if(on){v.currentTime=0; if(playing) v.play().catch(()=>{});} else {v.pause();}});
+    dots.forEach((d,k)=>{if(k===cur)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current')});
+    schedule();}
+  function schedule(){clearTimeout(rot); if(playing) rot=setTimeout(()=>show(cur+1),HOLD)}
+  vids.forEach(v=>v.addEventListener('ended',()=>{if(v.classList.contains('is-active'))show(cur+1)}));
+  document.getElementById('reelNext').addEventListener('click',()=>show(cur+1));
+  document.getElementById('reelPrev').addEventListener('click',()=>show(cur-1));
+  dots.forEach((d,k)=>d.addEventListener('click',()=>show(k)));
+  function setVid(){vt.setAttribute('aria-pressed',String(playing));vt.setAttribute('aria-label',playing?'Pause background video':'Play background video')}
+  vt.addEventListener('click',()=>{playing=!playing; const v=vids[cur]; if(playing){v.play().catch(()=>{});schedule()} else {v.pause();clearTimeout(rot)} setVid()});
+  if(!playing){vids.forEach(v=>{v.pause();v.removeAttribute('autoplay')})} else {vids[0].play().catch(()=>{})}
+  setVid(); schedule();
+
+  /* ---------- MENU DRAWER (focus trap + Esc) ---------- */
+  const drawer=document.getElementById('drawer'), menuBtn=document.getElementById('menuBtn');
+  function openDrawer(){drawer.dataset.open='true';menuBtn.setAttribute('aria-expanded','true');drawer.querySelector('.close').focus();document.body.style.overflow='hidden'}
+  function closeDrawer(){drawer.dataset.open='false';menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';menuBtn.focus()}
+  menuBtn.addEventListener('click',openDrawer);
+  drawer.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',closeDrawer));
+  drawer.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();
+    if(e.key==='Tab'){const f=[...drawer.querySelectorAll('a,button,select')];const first=f[0],last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+
+  /* ---------- INTENT CHIPS fill the search ---------- */
+  const q=document.getElementById('q');
+  document.querySelectorAll('.chips button').forEach(c=>c.addEventListener('click',()=>{q.value=c.dataset.q;q.focus();say('Added to your search — press Ask')}));
+
+  /* ---------- NEWS TABS (WAI-ARIA tabs pattern, arrow-key roving) ---------- */
+  const tabs=[...document.querySelectorAll('[role="tab"]')], cards=[...document.querySelectorAll('.nc')];
+  const map={'tab-all':null,'tab-alerts':'alerts','tab-benefits':'benefits','tab-events':'events','tab-press':'press'};
+  function selectTab(t){tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',String(on));x.tabIndex=on?0:-1});
+    document.getElementById('newsPanel').setAttribute('aria-labelledby',t.id);
+    const cat=map[t.id]; cards.forEach(c=>{c.hidden=!!cat&&c.dataset.cat!==cat}); rebuildDeck('news');}
+  tabs.forEach((t,i)=>{t.addEventListener('click',()=>selectTab(t));
+    t.addEventListener('keydown',e=>{let j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(e.key==='Home')j=0;if(e.key==='End')j=tabs.length-1;if(j!==null){e.preventDefault();tabs[j].focus();selectTab(tabs[j])}})});
+
+  /* ---------- MOBILE CARD DECK (playing-card stack; desktop untouched) ---------- */
+  const mq=matchMedia('(max-width: 767px)'); const decks={};
+  function rebuildDeck(name){const d=decks[name]; if(!d) return; d.items=[...d.el.children].filter(c=>!c.hidden); d.i=0; layout(name)}
+  function layout(name){const d=decks[name]; if(!mq.matches){return}
+    d.items.forEach((c,k)=>{c.dataset.pos=String((k-d.i+d.items.length)%d.items.length); c.setAttribute('aria-hidden',String(k!==d.i)); c.tabIndex=k===d.i?0:-1});
+    d.out.value=`${d.i+1} / ${d.items.length}`;}
+  function step(name,dir){const d=decks[name]; if(!d.items.length) return;
+    if(dir>0){const front=d.items[d.i]; front.classList.add('leaving'); setTimeout(()=>{front.classList.remove('leaving'); d.i=(d.i+1)%d.items.length; layout(name)},180)}
+    else {d.i=(d.i-1+d.items.length)%d.items.length; layout(name)}}
+  document.querySelectorAll('[data-deck]').forEach(el=>{const name=el.dataset.deck, ctrl=document.querySelector(`[data-deck-ctrl="${name}"]`);
+    decks[name]={el,ctrl,out:ctrl.querySelector('output'),items:[],i:0};
+    ctrl.querySelector('[data-next]').addEventListener('click',()=>step(name,1));
+    ctrl.querySelector('[data-prev]').addEventListener('click',()=>step(name,-1));
+    // touch swipe on the front card
+    let x0=null; el.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+    el.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)step(name,dx<0?1:-1);x0=null});
+    el.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();step(name,1)}if(e.key==='ArrowLeft'){e.preventDefault();step(name,-1)}});
+  });
+  function setDeckMode(){Object.keys(decks).forEach(name=>{const d=decks[name];
+    if(mq.matches){d.el.classList.add('deck');d.ctrl.hidden=false;d.el.setAttribute('role','group');d.el.setAttribute('aria-roledescription','card deck — swipe or use the buttons');rebuildDeck(name)}
+    else{d.el.classList.remove('deck');d.ctrl.hidden=true;d.el.removeAttribute('role');d.el.removeAttribute('aria-roledescription');[...d.el.children].forEach(c=>{delete c.dataset.pos;c.removeAttribute('aria-hidden');c.removeAttribute('tabindex')})}})}
+  setDeckMode(); mq.addEventListener('change',setDeckMode);
+
+  /* ---------- Material ripple on press ---------- */
+  document.addEventListener('pointerdown',e=>{const el=e.target.closest('button,.btn,.quick2 a,.wc-tiles a'); if(!el||el.disabled) return;
+    const r=el.getBoundingClientRect(), d=Math.max(r.width,r.height), sp=document.createElement('span'); sp.className='ripple';
+    sp.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`; el.appendChild(sp); sp.addEventListener('animationend',()=>sp.remove())},{passive:true});
+
+  /* ---------- Grid QA overlay: Shift+G ---------- */
+  document.addEventListener('keydown',e=>{if(e.shiftKey&&e.key==='G'&&!/input|textarea/i.test(e.target.tagName)){document.body.classList.toggle('show-grid')}});
+
+  /* ---------- Dismissible sticky alert ---------- */
+  const alertBar=document.getElementById('alertBar'); let dismissed=false; try{dismissed=sessionStorage.getItem('dshs-alert-dismissed')==='1'}catch(e){}
+  if(dismissed) alertBar.hidden=true; else document.body.classList.add('has-alert');
+  document.getElementById('alertClose').addEventListener('click',()=>{alertBar.hidden=true;document.body.classList.remove('has-alert');try{sessionStorage.setItem('dshs-alert-dismissed','1')}catch(e){};say('Alert dismissed')});
+
+  /* ---------- Accessibility button (placeholder, no functionality yet) ---------- */
+  document.querySelector('.a11y').addEventListener('click',()=>say('Accessibility options — coming soon'));
+  document.getElementById('langBtn').addEventListener('click',()=>say('Language menu — coming soon'));
+})();
+</script>
+</body>
+</html>
